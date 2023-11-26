@@ -4,8 +4,7 @@ import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
-import { parseDate } from '@internationalized/date';
-import { DateRangePicker, Provider, defaultTheme } from '@adobe/react-spectrum'
+import { Provider, defaultTheme } from '@adobe/react-spectrum'
 import Select from '@mui/material/Select';
 import { Line } from 'react-chartjs-2';
 import {
@@ -30,19 +29,17 @@ ChartJS.register(
 );
 
 
-const Query1 = () => {
-    debugger;
+const Query2 = () => {
     const [location, setLocation] = useState('');
     const [year, setYear] = useState('');
-    let [allYears, setAllYears] = useState([]);
-    const { query1, getQuery1, getAllAreas, areas } = useContext(GlobalContext);
+    const { query2, getQuery2, getAllAreas, areas } = useContext(GlobalContext);
 
 
     useEffect(() => {
         let mounted = true;
         async function getQuery() {
-            await getAllAreas();
-            await getQuery1();
+            if (areas.length === 0) await getAllAreas();
+            await getQuery2();
         }
         if (mounted) {
             getQuery();
@@ -50,29 +47,18 @@ const Query1 = () => {
         return () => (mounted = false);
     }, []);
 
-    useEffect(() => {
-        if (query1.length > 0) {
-            setAllYears(() => [...new Set(query1.map(y => y.YEAR))])
-        }
-    }, [query1])
-
-    const labels = ['Spring', 'Summer', 'Fall', 'Winter'];
-
-    console.log(labels.map(label => query1.find(q => {
-        return q.SEASON === label && year === q.YEAR && location === q.AREA_CODE
-    })));
+    const labels = [2020, 2021, 2022, 2023];
     const data = {
         labels,
         datasets: [
             {
-                label: 'Crime Count Over Seasons',
-                data: labels.map(label => query1.find(q => q.SEASON === label && year === q.YEAR && location === q.AREA_CODE)?.CRIME_COUNT),
+                label: 'Theft detection rate over years',
+                data: (labels.map(label => query2?.find(q => q.YEAR === label && location === q.AREA_CODE)?.DETECTION_RATE_PERCENTAGE) || []),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }
         ],
     };
-    console.log(year);
 
     const options = {
         responsive: true,
@@ -80,13 +66,13 @@ const Query1 = () => {
             y: {
                 title: {
                     display: true,
-                    text: 'Crime count'
+                    text: 'Theft detection rate'
                 }
             },
             x: {
                 title: {
                     display: true,
-                    text: 'Seasons'
+                    text: 'Years'
                 }
             }
         },
@@ -96,20 +82,16 @@ const Query1 = () => {
             },
             title: {
                 display: true,
-                text: 'Seasonal Variation in Crime Rates Across Different LAPD Community Police Station Areas',
+                text: 'Changes in Detection Rate of Theft-Related Crimes in Specific Districts Over Time',
             },
         },
-    };
-
-    const handleChangeYear = (event) => {
-        setYear(event.target.value);
     };
 
     const handleChange = (event) => {
         setLocation(event.target.value);
     };
 
-    return ((query1.length > 0 && allYears.length > 0) ?
+    return ((query2.length > 0) ?
         (<Provider theme={defaultTheme}>
             <Box sx={{ minWidth: 120, backgroundColor: 'white' }} >
                 <FormControl sx={{ m: 1, minWidth: 120, marginRight: '64px' }}>
@@ -130,23 +112,6 @@ const Query1 = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="year-select-label">Year</InputLabel>
-                    <Select
-                        labelId="year-select-label"
-                        id="year-simple-select"
-                        value={(() => {
-                            if (year === '') {
-                                setYear(allYears[0])
-                            }
-                            return year
-                        })()}
-                        label="Location"
-                        onChange={handleChangeYear}
-                    >
-                        {allYears?.map(y => <MenuItem value={y}>{y}</MenuItem>)}
-                    </Select>
-                </FormControl>
                 <div style={{ position: 'relative', height: '60vh', width: '80vw' }}>
                     <Line options={options} data={data} />
                 </div>
@@ -155,4 +120,4 @@ const Query1 = () => {
     );
 }
 
-export default Query1;
+export default Query2;

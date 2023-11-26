@@ -14,10 +14,52 @@ const GlobalReducer = (state, action) => {
                 is_loading: false
             }
 
-        case  "GET_AREAS":
+        case "GET_QUERY2":
+            return {
+                ...state,
+                query2: action.payload,
+                is_loading: false
+            }
+
+        case "GET_QUERY3":
+            return {
+                ...state,
+                query3: action.payload,
+                is_loading: false
+            }
+
+        case "GET_QUERY4":
+            return {
+                ...state,
+                query4: action.payload,
+                is_loading: false
+            }
+
+        case "GET_QUERY5":
+            return {
+                ...state,
+                query5: action.payload,
+                is_loading: false
+            }
+
+        case "GET_AREAS":
             return {
                 ...state,
                 areas: action.payload,
+                is_loading: false
+            }
+
+        case "GET_WEAPONS":
+            return{
+                ...state,
+                weapons: action.payload,
+                is_loading: false
+            }
+
+        case "GET_RECORD_COUNT":
+            return{
+                ...state,
+                total_records: action.payload,
                 is_loading: false
             }
         default:

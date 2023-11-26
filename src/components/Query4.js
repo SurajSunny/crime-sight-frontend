@@ -7,7 +7,7 @@ import FormControl from '@mui/material/FormControl';
 import { parseDate } from '@internationalized/date';
 import { DateRangePicker, Provider, defaultTheme } from '@adobe/react-spectrum'
 import Select from '@mui/material/Select';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -30,19 +30,23 @@ ChartJS.register(
 );
 
 
-const Query1 = () => {
+const Query4 = () => {
     debugger;
     const [location, setLocation] = useState('');
     const [year, setYear] = useState('');
-    let [allYears, setAllYears] = useState([]);
-    const { query1, getQuery1, getAllAreas, areas } = useContext(GlobalContext);
+    const [allYears, setAllYears] = useState([]);
+    const [allAgeGroups, setallAgeGroups] = useState([]);
+    const [ageGroup, setAgeGroup] = useState('');
+
+
+    const { query4, getQuery4, getAllAreas, areas } = useContext(GlobalContext);
 
 
     useEffect(() => {
         let mounted = true;
         async function getQuery() {
-            await getAllAreas();
-            await getQuery1();
+            if (areas.length === 0) await getAllAreas();
+            await getQuery4();
         }
         if (mounted) {
             getQuery();
@@ -51,24 +55,46 @@ const Query1 = () => {
     }, []);
 
     useEffect(() => {
-        if (query1.length > 0) {
-            setAllYears(() => [...new Set(query1.map(y => y.YEAR))])
+        if (query4.length > 0) {
+            setAllYears(() => [...new Set(query4.map(y => y.YEAR))]);
+            setallAgeGroups(() => [...new Set(query4.map(y => y.AGE_GROUP))])
         }
-    }, [query1])
+    }, [query4])
 
-    const labels = ['Spring', 'Summer', 'Fall', 'Winter'];
+    const labels = ['Spring', 'Summer', 'Autumn', 'Winter'];
 
-    console.log(labels.map(label => query1.find(q => {
-        return q.SEASON === label && year === q.YEAR && location === q.AREA_CODE
-    })));
     const data = {
         labels,
         datasets: [
             {
-                label: 'Crime Count Over Seasons',
-                data: labels.map(label => query1.find(q => q.SEASON === label && year === q.YEAR && location === q.AREA_CODE)?.CRIME_COUNT),
+                label: 'Age 0-17',
+                data: labels.map(label => query4?.find(q => q.SEASON === label && year === q.YEAR && q.AGE_GROUP === "0-17" && location === q.AREA_CODE)?.VICTIM_COUNT),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
+            },
+            {
+                label: 'Age 18-30',
+                data: labels.map(label => query4?.find(q => q.SEASON === label && year === q.YEAR && q.AGE_GROUP === "18-30" && location === q.AREA_CODE)?.VICTIM_COUNT),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: 'rgba(53, 162, 235, 0.5)',
+            },
+            {
+                label: 'Age 31-45',
+                data: labels.map(label => query4?.find(q => q.SEASON === label && year === q.YEAR && q.AGE_GROUP === "31-45" && location === q.AREA_CODE)?.VICTIM_COUNT),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: '#4bc0c0',
+            },
+            {
+                label: 'Age 46-60',
+                data: labels.map(label => query4?.find(q => q.SEASON === label && year === q.YEAR && q.AGE_GROUP === "46-60" && location === q.AREA_CODE)?.VICTIM_COUNT),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: '#ff9f40',
+            },
+            {
+                label: 'Age 61+',
+                data: labels.map(label => query4?.find(q => q.SEASON === label && year === q.YEAR && q.AGE_GROUP === "61+" && location === q.AREA_CODE)?.VICTIM_COUNT),
+                borderColor: 'rgb(255, 99, 132)',
+                backgroundColor: '#9966ff',
             }
         ],
     };
@@ -80,7 +106,7 @@ const Query1 = () => {
             y: {
                 title: {
                     display: true,
-                    text: 'Crime count'
+                    text: 'Victim count'
                 }
             },
             x: {
@@ -96,7 +122,7 @@ const Query1 = () => {
             },
             title: {
                 display: true,
-                text: 'Seasonal Variation in Crime Rates Across Different LAPD Community Police Station Areas',
+                text: 'Seasonal Victim Count Trends Across Different Age Groups in Specific Areas',
             },
         },
     };
@@ -109,7 +135,11 @@ const Query1 = () => {
         setLocation(event.target.value);
     };
 
-    return ((query1.length > 0 && allYears.length > 0) ?
+    const handleChangeAge = (event) => {
+        setAgeGroup(event.target.value);
+    };
+
+    return ((query4.length > 0 && allYears.length > 0 && allAgeGroups.length > 0) ?
         (<Provider theme={defaultTheme}>
             <Box sx={{ minWidth: 120, backgroundColor: 'white' }} >
                 <FormControl sx={{ m: 1, minWidth: 120, marginRight: '64px' }}>
@@ -147,12 +177,30 @@ const Query1 = () => {
                         {allYears?.map(y => <MenuItem value={y}>{y}</MenuItem>)}
                     </Select>
                 </FormControl>
+
+                {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="age-select-label">Age Group</InputLabel>
+                    <Select
+                        labelId="age-select-label"
+                        id="age-simple-select"
+                        value={(() => {
+                            if (ageGroup === '') {
+                                setAgeGroup(allAgeGroups[0])
+                            }
+                            return ageGroup
+                        })()}
+                        label="Age Group"
+                        onChange={handleChangeAge}
+                    >
+                        {allAgeGroups?.map(y => <MenuItem value={y}>{y}</MenuItem>)}
+                    </Select>
+                </FormControl> */}
                 <div style={{ position: 'relative', height: '60vh', width: '80vw' }}>
-                    <Line options={options} data={data} />
+                    <Bar options={options} data={data} />
                 </div>
             </Box>
         </Provider>) : <></>
     );
 }
 
-export default Query1;
+export default Query4;

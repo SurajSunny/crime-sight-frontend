@@ -30,19 +30,22 @@ ChartJS.register(
 );
 
 
-const Query1 = () => {
-    debugger;
+const Query5 = () => {
     const [location, setLocation] = useState('');
     const [year, setYear] = useState('');
-    let [allYears, setAllYears] = useState([]);
-    const { query1, getQuery1, getAllAreas, areas } = useContext(GlobalContext);
+    const [allYears, setAllYears] = useState([]);
+    const [weapon, setWeapon] = useState('');
+
+
+    const { query5, getQuery5, getAllAreas, areas, weapons, getWeapons } = useContext(GlobalContext);
 
 
     useEffect(() => {
         let mounted = true;
         async function getQuery() {
-            await getAllAreas();
-            await getQuery1();
+            if (areas.length === 0) await getAllAreas();
+            if (weapons.length === 0) await getWeapons();
+            await getQuery5();
         }
         if (mounted) {
             getQuery();
@@ -51,22 +54,19 @@ const Query1 = () => {
     }, []);
 
     useEffect(() => {
-        if (query1.length > 0) {
-            setAllYears(() => [...new Set(query1.map(y => y.YEAR))])
+        if (query5.length > 0) {
+            setAllYears(() => [...new Set(query5.map(y => y.YEAR))]);
         }
-    }, [query1])
+    }, [query5])
 
-    const labels = ['Spring', 'Summer', 'Fall', 'Winter'];
+    const labels = [2020, 2021, 2022, 2023];
 
-    console.log(labels.map(label => query1.find(q => {
-        return q.SEASON === label && year === q.YEAR && location === q.AREA_CODE
-    })));
     const data = {
         labels,
         datasets: [
             {
-                label: 'Crime Count Over Seasons',
-                data: labels.map(label => query1.find(q => q.SEASON === label && year === q.YEAR && location === q.AREA_CODE)?.CRIME_COUNT),
+                label: 'Weapon usage rate change over year',
+                data: labels.map(label => query5?.find(q => label === q.YEAR && location === q.AREA_CODE && weapon === q.WEAPON_USED_CODE)?.YEAR_OVER_YEAR_CHANGE),
                 borderColor: 'rgb(255, 99, 132)',
                 backgroundColor: 'rgba(255, 99, 132, 0.5)',
             }
@@ -80,13 +80,13 @@ const Query1 = () => {
             y: {
                 title: {
                     display: true,
-                    text: 'Crime count'
+                    text: 'Weapons usage rate change'
                 }
             },
             x: {
                 title: {
                     display: true,
-                    text: 'Seasons'
+                    text: 'Years'
                 }
             }
         },
@@ -96,7 +96,7 @@ const Query1 = () => {
             },
             title: {
                 display: true,
-                text: 'Seasonal Variation in Crime Rates Across Different LAPD Community Police Station Areas',
+                text: 'Fluctuations in Weapon Types Used in Crimes Over Time in Specific Locations',
             },
         },
     };
@@ -109,7 +109,11 @@ const Query1 = () => {
         setLocation(event.target.value);
     };
 
-    return ((query1.length > 0 && allYears.length > 0) ?
+    const handleChangeWeapon = (event) => {
+        setWeapon(event.target.value);
+    };
+
+    return ((query5.length > 0 && allYears.length > 0 && weapons.length > 0) ?
         (<Provider theme={defaultTheme}>
             <Box sx={{ minWidth: 120, backgroundColor: 'white' }} >
                 <FormControl sx={{ m: 1, minWidth: 120, marginRight: '64px' }}>
@@ -130,7 +134,7 @@ const Query1 = () => {
                     </Select>
                 </FormControl>
 
-                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="year-select-label">Year</InputLabel>
                     <Select
                         labelId="year-select-label"
@@ -146,6 +150,24 @@ const Query1 = () => {
                     >
                         {allYears?.map(y => <MenuItem value={y}>{y}</MenuItem>)}
                     </Select>
+                </FormControl> */}
+
+                <FormControl sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="weapon-select-label">Weapon</InputLabel>
+                    <Select
+                        labelId="weapon-select-label"
+                        id="weapon-simple-select"
+                        value={(() => {
+                            if (weapon === '') {
+                                setWeapon(weapons[0].WEAPON_USED_CODE)
+                            }
+                            return weapon
+                        })()}
+                        label="weapon"
+                        onChange={handleChangeWeapon}
+                    >
+                        {weapons?.map(w => <MenuItem value={w.WEAPON_USED_CODE}>{w.WEAPON_DESCR}</MenuItem>)}
+                    </Select>
                 </FormControl>
                 <div style={{ position: 'relative', height: '60vh', width: '80vw' }}>
                     <Line options={options} data={data} />
@@ -155,4 +177,4 @@ const Query1 = () => {
     );
 }
 
-export default Query1;
+export default Query5;
