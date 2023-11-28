@@ -25,7 +25,7 @@ const Tabs = () => {
                     <TabList onChange={handleChange} aria-label="lab API tabs example">
                         <Tab label="About" value="0" />
                         <Tab label="Crime Rate" value="1" />
-                        <Tab label="Theft Rate" value="2" />
+                        <Tab label="Theft Detection Rate" value="2" />
                         <Tab label="Peak Hour" value="3" />
                         <Tab label="Victim Counts" value="4" />
                         <Tab label="Weapon Usage Rate" value="5" />

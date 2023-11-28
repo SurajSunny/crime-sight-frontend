@@ -10,12 +10,13 @@ const Home = () => {
     const { total_records, getRecordCount } = useContext(GlobalContext);
     let navigate = useNavigate();
 
-    useEffect(() => {
-        getRecordCount();
-    }, [])
 
     const handleClick = () => {
         navigate('/queries');
+    }
+
+    const getTotalRecords = () => {
+        getRecordCount();
     }
 
     return (
@@ -40,12 +41,18 @@ const Home = () => {
                     }}
                 >
                     <div>
-                        <b>Total records: {total_records[0]?.TOTALCOUNT}</b><br />
+                        <b style={{ margin: '20px' }}>Total records: {total_records?.length === 0 ? <Button sx={{
+                            color: '#e24747', '&:hover': {
+                                color: '#e24747',
+                            }
+                        }} onClick={getTotalRecords} >View</Button> : total_records[0]?.TOTALCOUNT}</b><br />
 
                         <Button variant="contained" sx={{
                             backgroundColor: '#e24747', '&:hover': {
                                 backgroundColor: '#e24747',
-                            }, margin: '20px'
+                            }, margin: '20px',
+                            position:'relative',
+                            left: '12px'
                         }} onClick={handleClick} >View Queries</Button>
                     </div >
                 </Box>

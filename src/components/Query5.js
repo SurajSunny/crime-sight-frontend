@@ -169,8 +169,18 @@ const Query5 = () => {
                         {weapons?.map(w => <MenuItem value={w.WEAPON_USED_CODE}>{w.WEAPON_DESCR}</MenuItem>)}
                     </Select>
                 </FormControl>
-                <div style={{ position: 'relative', height: '60vh', width: '80vw' }}>
-                    <Line options={options} data={data} />
+
+                <div style={{ position: 'relative', height: '60vh', width: '80vw', display: 'flex', flexWrap: 'wrap' }}>
+
+                    <div style={{ flex: '0 0 60%' }}>
+                        <Line options={options} data={data} />
+
+
+                    </div>
+                    <div style={{ flex: '0 0 10%' }}></div>
+                    <div style={{ flex: '0 0 30%', display: 'flex', alignItems: 'center' }}>
+                        Query aims to analyze how the types of weapons used in crimes fluctuate over time in specific locations
+                    </div>
                 </div>
             </Box>
         </Provider>) : <></>

@@ -117,9 +117,8 @@ const Query2 = () => {
                         <Line options={options} data={data} />
                     </div>
                     <div style={{ flex: '0 0 10%' }}></div>
-                    <div style={{ flex: '0 0 30%' }}>
-                        To assess the evolution of detection rates for theft-related crimes in specific districts over time, this SQL query focuses on uncovering the success rate of law enforcement in solving such crimes within designated areas. The aim is to deliver a detailed understanding of how effectively theft incidents are being addressed and resolved across various districts. By tracking and analyzing these detection rates over a specified period, we can gain insights into the trends and patterns of law enforcement efficacy.<br />
-                        This analysis is pivotal for evaluating the impact of current crime-solving strategies and policies. A steady or increasing detection rate over time could signify the effectiveness of existing law enforcement methods, whereas a decline or inconsistency in these rates may signal the need for a strategic reassessment. This query, therefore, serves as a crucial tool for law enforcement agencies and policymakers to gauge the effectiveness of their approaches to combating theft and to make informed decisions about potential adjustments or enhancements to their crime-fighting strategies. The ultimate goal is to ensure that law enforcement efforts are as effective as possible, thereby enhancing public safety and trust within these communities.
+                    <div style={{ flex: '0 0 30%', display: 'flex', alignItems: 'center' }}>
+                        Query assess the evolution of detection rates for theft-related crimes in specific districts over time
                     </div>
                 </div>
             </Box>

@@ -151,9 +151,8 @@ const Query1 = () => {
                         <Line options={options} data={data} />
                     </div>
                     <div style={{ flex: '0 0 10%' }}></div>
-                    <div style={{ flex: '0 0 30%' }}>
-                        To explore seasonal variations in crime rates across different LAPD Community Police Station Areas over time, this SQL query is designed to uncover patterns and trends that could be critical for informed decision-making and strategic interventions. By examining the fluctuation of crime rates seasonally and regionally, we aim to identify specific areas or locations that consistently exhibit spikes in criminal activity during certain times of the year, such as summer or winter. This analysis is crucial for understanding the dynamic nature of crime in various neighborhoods, which in turn can inform targeted measures. The insights garnered from this query could assist in optimizing law enforcement deployment, enhancing community outreach efforts, and implementing preventative strategies tailored to the unique needs of each area. The ultimate goal is to promote safer communities through data-driven, seasonally-adjusted law enforcement and community engagement initiatives.
-                    </div>
+                    <div style={{ flex: '0 0 30%', display: 'flex', alignItems: 'center' }}>
+                        Query explores seasonal variations in crime rates across different LAPD Community Police Station Areas over time                    </div>
                 </div>
             </Box>
         </Provider>) : <></>

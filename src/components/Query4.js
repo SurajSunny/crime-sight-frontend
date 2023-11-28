@@ -195,8 +195,17 @@ const Query4 = () => {
                         {allAgeGroups?.map(y => <MenuItem value={y}>{y}</MenuItem>)}
                     </Select>
                 </FormControl> */}
-                <div style={{ position: 'relative', height: '60vh', width: '80vw' }}>
-                    <Bar options={options} data={data} />
+                <div style={{ position: 'relative', height: '60vh', width: '80vw', display: 'flex', flexWrap: 'wrap' }}>
+
+                    <div style={{ flex: '0 0 60%' }}>
+                        <Bar options={options} data={data} />
+
+
+                    </div>
+                    <div style={{ flex: '0 0 10%' }}></div>
+                    <div style={{ flex: '0 0 30%', display: 'flex', alignItems: 'center' }}>
+                        Query is designed to analyze victim counts grouped by seasons across different age groups in specific areas over time
+                    </div>
                 </div>
             </Box>
         </Provider>) : <></>
