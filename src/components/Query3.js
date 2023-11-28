@@ -146,8 +146,16 @@ const Query3 = () => {
                     </Select>
                 </FormControl>
 
-                <div style={{ position: 'relative', height: '60vh', width: '80vw' }}>
-                    <Bar options={options} data={data} />
+                <div style={{ position: 'relative', height: '60vh', width: '80vw', display: 'flex', flexWrap: 'wrap' }}>
+
+                    <div style={{ flex: '0 0 60%' }}>
+                        <Bar options={options} data={data} />
+
+                    </div>
+                    <div style={{ flex: '0 0 10%' }}></div>
+                    <div style={{ flex: '0 0 30%' }}>
+                        This SQL query aims to pinpoint peak hours for criminal incidents in specific areas by analyzing crime occurrence frequencies at various times throughout the day. It offers critical insights for individual safety and community awareness, informing residents about potentially risky hours, like identifying spikes in crime between 8 PM and 10 PM in certain areas. This knowledge empowers residents to make informed decisions about their activities, enhancing personal and communal safety. Additionally, it aids law enforcement in optimizing patrol schedules and resource allocation, aligning their efforts with identified high-risk periods. Ultimately, this query fosters a more informed, vigilant, and safer community environment.
+                    </div>
                 </div>
             </Box>
         </Provider>) : <></>

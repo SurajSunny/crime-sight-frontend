@@ -12,7 +12,10 @@ const initialState = {
   query4: [],
   query5: [],
   weapons: [],
-  total_records: []
+  total_records: [],
+  crimesByYear:[],
+  crimeWeapons: [],
+  areasCrime: []
 };
 
 export const GlobalContext = createContext([]);
@@ -126,6 +129,45 @@ export const GlobalProvider = ({ children }) => {
     }
   };
 
+  const getCrimeByYear = async () => {
+    try {
+      dispatch({ type: "LOADER" });
+      const data = await api.get('/get_recordEachYear');
+      dispatch({
+        type: "GET_CRIME_BY_YEAR",
+        payload: data.data,
+      });
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
+
+  const getCrimeCountWeapons = async () => {
+    try {
+      dispatch({ type: "LOADER" });
+      const data = await api.get('/get_weaponCount');
+      dispatch({
+        type: "GET_CRIME_COUNT_WEAPONS",
+        payload: data.data,
+      });
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
+
+  const getAreasCrime = async () => {
+    try {
+      dispatch({ type: "LOADER" });
+      const data = await api.get('/get_areaCount');
+      dispatch({
+        type: "GET_CRIME_COUNT_AREA",
+        payload: data.data,
+      });
+    } catch (error) {
+      console.log(error.response?.data);
+    }
+  };
+
 
   return (
     <GlobalContext.Provider
@@ -138,6 +180,9 @@ export const GlobalProvider = ({ children }) => {
         areas: state.areas,
         weapons: state.weapons,
         total_records: state.total_records,
+        crimesByYear: state.crimesByYear,
+        crimeWeapons: state.crimeWeapons,
+        areasCrime: state.areasCrime,
         is_loading: state.is_loading,
         getQuery1,
         getAllAreas,
@@ -146,7 +191,10 @@ export const GlobalProvider = ({ children }) => {
         getQuery4,
         getQuery5,
         getWeapons,
-        getRecordCount
+        getRecordCount,
+        getCrimeByYear,
+        getCrimeCountWeapons,
+        getAreasCrime
       }}
     >
       {children}

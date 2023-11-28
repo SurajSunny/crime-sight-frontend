@@ -6,7 +6,6 @@ const GlobalReducer = (state, action) => {
                 is_loading: true
             };
 
-        //-------GET QUERY 1-----------
         case "GET_QUERY1":
             return {
                 ...state,
@@ -50,16 +49,36 @@ const GlobalReducer = (state, action) => {
             }
 
         case "GET_WEAPONS":
-            return{
+            return {
                 ...state,
                 weapons: action.payload,
                 is_loading: false
             }
 
         case "GET_RECORD_COUNT":
-            return{
+            return {
                 ...state,
                 total_records: action.payload,
+                is_loading: false
+            }
+        case "GET_CRIME_BY_YEAR":
+            return {
+                ...state,
+                crimesByYear: action.payload,
+                is_loading: false
+            }
+
+        case "GET_CRIME_COUNT_WEAPONS":
+            return {
+                ...state,
+                crimeWeapons: action.payload,
+                is_loading: false
+            }
+
+        case "GET_CRIME_COUNT_AREA":
+            return {
+                ...state,
+                areasCrime: action.payload,
                 is_loading: false
             }
         default:
