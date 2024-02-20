@@ -4,15 +4,11 @@ It is visualised to understand and populate meaningful data inorder to understan
 
 We explored the following complex trends and provided graphs for each:
 
-How does the seasonal variation in crime rates, adjusted for population density, evolve in different LAPD Community Police Station Areas over time?
-
-How has the detection rate of drug-related crimes changed in specific districts over time?
-
-What are the peak hours for criminal incidents in specific areas by examining the frequency of occurrences at various times of the day over time?
-
-What are the victim counts grouped together by seasons across different age groups in specific areas over time?
-
-How does the rate of change in weapon types used in crimes fluctuate over time in specific locations?
+How does the seasonal variation in crime rates, adjusted for population density, evolve in different LAPD Community Police Station Areas over time?<br/>
+How has the detection rate of drug-related crimes changed in specific districts over time?<br/>
+What are the peak hours for criminal incidents in specific areas by examining the frequency of occurrences at various times of the day over time?<br/>
+What are the victim counts grouped together by seasons across different age groups in specific areas over time?<br/>
+How does the rate of change in weapon types used in crimes fluctuate over time in specific locations?<br/>
 
 Used React, Context Providers and chart.js
 
