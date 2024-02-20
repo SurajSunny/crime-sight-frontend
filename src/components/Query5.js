@@ -134,24 +134,6 @@ const Query5 = () => {
                     </Select>
                 </FormControl>
 
-                {/* <FormControl sx={{ m: 1, minWidth: 120 }}>
-                    <InputLabel id="year-select-label">Year</InputLabel>
-                    <Select
-                        labelId="year-select-label"
-                        id="year-simple-select"
-                        value={(() => {
-                            if (year === '') {
-                                setYear(allYears[0])
-                            }
-                            return year
-                        })()}
-                        label="Location"
-                        onChange={handleChangeYear}
-                    >
-                        {allYears?.map(y => <MenuItem value={y}>{y}</MenuItem>)}
-                    </Select>
-                </FormControl> */}
-
                 <FormControl sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="weapon-select-label">Weapon</InputLabel>
                     <Select

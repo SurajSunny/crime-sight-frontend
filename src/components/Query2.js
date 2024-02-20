@@ -82,7 +82,7 @@ const Query2 = () => {
             },
             title: {
                 display: true,
-                text: 'Changes in Detection Rate of Theft-Related Crimes in Specific Districts Over Time',
+                text: 'Changes in Detection Rate of Theft-Related Crimes in Specific Areas Over Time',
             },
         },
     };
@@ -118,7 +118,7 @@ const Query2 = () => {
                     </div>
                     <div style={{ flex: '0 0 10%' }}></div>
                     <div style={{ flex: '0 0 30%', display: 'flex', alignItems: 'center' }}>
-                        Query assess the evolution of detection rates for theft-related crimes in specific districts over time
+                        Query assess the evolution of detection rates for theft-related crimes in specific areas over time
                     </div>
                 </div>
             </Box>
